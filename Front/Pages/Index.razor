@@ -1,0 +1,22 @@
+﻿@page "/"
+
+@using Microsoft.AspNetCore.Http.Extensions;
+@inject NavigationManager Navigation
+
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+<button @onclick="NavigateToNewPage">Go to New Page</button>
+<a href="/items">This works just fine</a>
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+    private void NavigateToNewPage()
+    {
+        Navigation.NavigateTo("/items");
+    }
+}
