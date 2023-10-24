@@ -1,8 +1,0 @@
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.csproj.AssemblyReference.cache
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.GeneratedMSBuildEditorConfig.editorconfig
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.AssemblyInfoInputs.cache
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.AssemblyInfo.cs
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.csproj.CoreCompileInputs.cache
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.MvcApplicationPartsAssemblyInfo.cache
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.RazorAssemblyInfo.cache
-D:\Full\BlazorApp2\obj\Debug\net7.0\Front.RazorAssemblyInfo.cs
