@@ -122,7 +122,7 @@ tr:nth-child(even) {
                     <label for="inputText">Image link: </label>
                     <input type="text" @bind="imgLink" class="form-control" id="imgLink" name="inputText" placeholder="Type something..."/>
                 </div>
-                <div class="bottom-right-element">
+                <div class="mt-4">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
 
@@ -135,7 +135,8 @@ tr:nth-child(even) {
     {
         <h2>@ErrorMessage</h2>
     }
-    <table>
+    <br />
+    <table class="mb-4">
 
         <tr>
             <th>Manufacturer</th>
@@ -169,11 +170,14 @@ tr:nth-child(even) {
 
 
     </table>
-    <button @onclick="() => DeleteSelectedItems()">DELETE</button>
-    <button @onclick="() => ResetDelete()" class="mb-4">Reset</button>
+    <hr />
+    <button class="btn btn-danger" @onclick="() => DeleteSelectedItems()">DELETE</button>
+    <button class="btn btn-secondary" @onclick="() => ResetDelete()" >Reset</button>
     <div id="notification" class="hidden">
         <span>Item added</span>
     </div>
+    <br>
+
 
     <div id="error" class="hidden">
         <span>An error ocurred!</span>
@@ -249,7 +253,7 @@ tr:nth-child(even) {
     private List<Item>? items = new List<Item>();
     private string httpsLocalhostApiItems = "https://localhost:44345/api/items";
     protected string ErrorMessage { get; set; } = string.Empty;
-    
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -276,7 +280,7 @@ tr:nth-child(even) {
         Console.WriteLine($"User input: {desc}");
         Random random = new Random();
 
-    // Generate a random Int32 value
+        // Generate a random Int32 value
         int randomNumber = random.Next();
         var userInputObject = new
         {
@@ -298,21 +302,21 @@ tr:nth-child(even) {
         {
             var responseContent = await response.Content.ReadAsStringAsync();
             items = await HttpClient.GetFromJsonAsync<List<Item>>(httpsLocalhostApiItems);
-    // Handle the response content as 
+            // Handle the response content as 
             Console.WriteLine($"Response Content: {responseContent}");
             await JSRuntime.InvokeVoidAsync("showNotif");
         }
         else
         {
-    // The request encountered an error (non-successful status code)
+            // The request encountered an error (non-successful status code)
 
-    // Get the HTTP status code
+            // Get the HTTP status code
             var statusCode = (int)response.StatusCode;
 
-    // Extract the response content as a string (if needed)
+            // Extract the response content as a string (if needed)
             var responseContent = await response.Content.ReadAsStringAsync();
 
-    // Handle the error, e.g., display an error message
+            // Handle the error, e.g., display an error message
             Console.WriteLine($"HTTP Status Code: {statusCode}");
             Console.WriteLine($"Error Response Content: {responseContent}");
             await JSRuntime.InvokeVoidAsync("showNotifE");
@@ -326,6 +330,7 @@ tr:nth-child(even) {
         desc = string.Empty;
         price = 0;
         quan = 0;
+        imgLink = string.Empty;
         await Task.Delay(4000);
         await JSRuntime.InvokeVoidAsync("hideNotification");
     }

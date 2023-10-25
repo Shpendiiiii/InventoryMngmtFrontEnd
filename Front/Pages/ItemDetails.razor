@@ -1,29 +1,40 @@
 ﻿@page "/ItemDetails/{id:int}"
 @using BlazorApp2.Models
 @inject HttpClient Http
-<h3>Item Details</h3>
+<div class="d-flex justify-content-between align-items-center">
+    <h3>Item Details</h3>
+    <button class="btn btn-success " type="button" title="Edit" padding: 0>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square d-inline-block" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+        </svg>
+        <p class="d-inline-block p-0 m-0">Edit</p>
+    </button>
+</div>
 
 @if (item == null)
 {
-    <p>Loading...</p>
+    <p>Not found</p>
 }
 else
 {
-    <div class="mx-auto" style="width: 200px;">
+    <div class="mx-auto text-center" style="width: 320px;">
         <!-- Display item details here -->
         @if (!string.IsNullOrEmpty(item.Image))
         {
-            <img src="@item.Image" width="200" alt="No resource found"/>
+            <img src="@item.Image" width="320" alt="No resource found" />
         }
         else
         {
             <span>No image available</span>
         }
-        <p>@item.Manufacturer @item.ModelName @item.ModelYear</p>
-        <p>MSRP: @item.Price</p>
+        <p class=""><mark>@item.Manufacturer @item.ModelName @item.ModelYear</mark></p>
+        <p>MSRP: <strong>@item.Price</strong> Euros</p>
         <p>@item.Description</p>
-        <p>Currently in stock: @item.Quantity</p>
+        <p><abbr title="HyperText Markup Language" class="initialism">Currently in stock: @item.Quantity</abbr></p>
         <!-- Add more properties as needed -->
+        @*<button>Edit</button>*@
+
     </div>
 }
 
