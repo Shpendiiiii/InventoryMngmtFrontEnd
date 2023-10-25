@@ -33,3 +33,9 @@ function setBackground(id) {
 function revertBackground(id){
     document.getElementById(id).style.backgroundColor = originalBackgroundColor[id];
 }
+
+function openInNewTab(url){
+    let win = window.open(url, '_blank');
+    win.blur();
+    window.focus();
+}

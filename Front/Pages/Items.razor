@@ -7,6 +7,8 @@
 @using BlazorApp2.Models
 @inject HttpClient HttpClient
 @inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+
 
 <style>
 .bottom-right-element{
@@ -128,6 +130,11 @@ tr:nth-child(even) {
         </fieldset>
 
     </form>
+    
+    @if(!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <h2>@ErrorMessage</h2>
+    }
     <table>
 
         <tr>
@@ -141,7 +148,7 @@ tr:nth-child(even) {
 
         @foreach (var item in items)
         {
-            <tr id="@item._id" @onclick="() => ShowDocId(item._id)">
+            <tr id="@item._id" @onclick="() => ShowDocId(item._id)" @ondblclick="() => GoToDetails(item._id)">
                 <td>@item.Manufacturer</td>
                 <td>@item.ModelName</td>
                 <td>@item.Description</td>
@@ -163,7 +170,7 @@ tr:nth-child(even) {
 
     </table>
     <button @onclick="() => DeleteSelectedItems()">DELETE</button>
-    <button @onclick="() => ResetDelete()">Reset</button>
+    <button @onclick="() => ResetDelete()" class="mb-4">Reset</button>
     <div id="notification" class="hidden">
         <span>Item added</span>
     </div>
@@ -179,6 +186,12 @@ tr:nth-child(even) {
 @code{
 
     private List<int> ToBeDeleted = new List<int>();
+    
+    async void GoToDetails(int id)
+    {
+        var url = $"/itemdetails/{id}";
+        await JSRuntime.InvokeVoidAsync("openInNewTab", url);
+    }
 
     void ShowDocId(int id)
     {
@@ -235,10 +248,18 @@ tr:nth-child(even) {
     private string imgLink;
     private List<Item>? items = new List<Item>();
     private string httpsLocalhostApiItems = "https://localhost:44345/api/items";
-
+    protected string ErrorMessage { get; set; } = string.Empty;
+    
     protected override async Task OnInitializedAsync()
     {
-        items = await HttpClient.GetFromJsonAsync<List<Item>>(httpsLocalhostApiItems);
+        try
+        {
+            items = await HttpClient.GetFromJsonAsync<List<Item>>(httpsLocalhostApiItems);
+        }
+        catch
+        {
+            ErrorMessage = "Connection to the database was not possible. Try again later.";
+        }
     }
 
     // To store the user input
