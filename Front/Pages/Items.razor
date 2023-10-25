@@ -162,8 +162,8 @@ tr:nth-child(even) {
 
 
     </table>
-    <button @onclick="()=> DeleteSelectedItems()">DELETE</button>
-    <button @onclick="()=> ResetDelete()">Reset</button>
+    <button @onclick="() => DeleteSelectedItems()">DELETE</button>
+    <button @onclick="() => ResetDelete()">Reset</button>
     <div id="notification" class="hidden">
         <span>Item added</span>
     </div>
@@ -183,6 +183,10 @@ tr:nth-child(even) {
     void ShowDocId(int id)
     {
         Console.WriteLine("Elem id" + id);
+        if (ToBeDeleted.Contains(id))
+        {
+            return;
+        }
         ToBeDeleted.Add(id);
         JSRuntime.InvokeVoidAsync("setBackground", id);
     }
@@ -195,7 +199,7 @@ tr:nth-child(even) {
         }
         ToBeDeleted.Clear();
     }
-    
+
     private async Task DeleteSelectedItems()
     {
         if (ToBeDeleted.Count > 0)
@@ -206,16 +210,16 @@ tr:nth-child(even) {
             if (response.IsSuccessStatusCode)
             {
                 items.RemoveAll(i => ToBeDeleted.Contains(i._id));
-                ToBeDeleted.Clear(); 
+                ToBeDeleted.Clear();
             }
             else
             {
                 var statusCode = (int)response.StatusCode;
 
-    // Extract the response content as a string (if needed)
+                // Extract the response content as a string (if needed)
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-    // Handle the error, e.g., display an error message
+                // Handle the error, e.g., display an error message
                 Console.WriteLine($"HTTP Status Code: {statusCode}");
                 Console.WriteLine($"Error Response Content: {responseContent}");
                 await JSRuntime.InvokeVoidAsync("showNotifE");
